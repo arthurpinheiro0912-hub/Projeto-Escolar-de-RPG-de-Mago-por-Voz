@@ -1,64 +1,21 @@
-import os
 import sys
-import json
-import queue
-import sounddevice as sd
-from vosk import Model, KaldiRecognizer
 from abc import ABC, abstractmethod
 
 # ==============================================================================
-# 1. MOTOR DE ENTRADA (Gerencia se o input vem da Voz ou do Teclado)
+# 1. MOTOR DE ENTRADA (Gerencia entrada via teclado)
 # ==============================================================================
 class MotorEntrada:
-    def __init__(self, modo: str, caminho_modelo="."):
-        self.modo = modo  # "1" para voz, "2" para teclado
-        self.modelo = None
-        self.reconhecedor = None
-        self.fila_audio = queue.Queue()
-
-        if self.modo == "1":
-            if not os.path.exists(os.path.join(caminho_modelo, "am")) and not os.path.exists(caminho_modelo):
-                print(f"❌ Erro: Arquivos do modelo do Vosk não encontrados em '{caminho_modelo}'!")
-                sys.exit(1)
-            
-            print("\n🔮 Sintonizando plano astral e carregando feitiços (Carregando Vosk)...")
-            self.modelo = Model(caminho_modelo)
-            self.reconhecedor = KaldiRecognizer(self.modelo, 16000)
-
-    def _callback_audio(self, indata, frames, time, status):
-        if status:
-            print(status, file=sys.stderr)
-        self.fila_audio.put(bytes(indata))
-
     def obter_comando(self, mensagem_prompt: str) -> str:
-        """Obtém o comando do usuário via microfone ou via teclado dependendo do modo."""
-        # MODO 2: TECLADO (Sem microfone)
-        if self.modo == "2":
-            print(f"\n⌨️  {mensagem_prompt}")
-            return input("Digite seu comando: ").strip().lower()
-
-        # MODO 1: VOZ (Microfone)
-        print(f"\n🎙️  {mensagem_prompt}")
-        print("[Microfone Ativo] Diga seu comando agora...")
-        self.fila_audio.queue.clear()
-        
-        with sd.RawInputStream(samplerate=16000, blocksize=8000, dtype='int16',
-                               channels=1, callback=self._callback_audio):
-            while True:
-                dados = self.fila_audio.get()
-                if self.reconhecedor.AcceptWaveform(dados):
-                    resultado = json.loads(self.reconhecedor.Result())
-                    texto_reconhecido = resultado.get("text", "").strip()
-                    if texto_reconhecido:
-                        return texto_reconhecido
+        print(f"\n⌨️  {mensagem_prompt}")
+        return input("Digite seu comando: ").strip().lower()
 
 # ==============================================================================
 # 2. SISTEMA DE MAGIAS (Abstração, Herança e Polimorfismo)
 # ==============================================================================
 class Magia(ABC):
-    def __init__(self, nome: str, comando_voz: str, custo_mana: int):
+    def __init__(self, nome: str, comando: str, custo_mana: int):
         self.nome = nome
-        self.comando_voz = comando_voz
+        self.comando = comando
         self.custo_mana = custo_mana
 
     @abstractmethod
@@ -66,8 +23,8 @@ class Magia(ABC):
         pass
 
 class MagiaAtaque(Magia):
-    def __init__(self, nome: str, comando_voz: str, custo_mana: int, dano: int):
-        super().__init__(nome, comando_voz, custo_mana)
+    def __init__(self, nome: str, comando: str, custo_mana: int, dano: int):
+        super().__init__(nome, comando, custo_mana)
         self.dano = dano
 
     def conjurar(self, conjurador, alvo):
@@ -123,7 +80,7 @@ class Mago(ABC):
         print(f"🤕 {self.nome} sofreu {qtd} de dano! Vida restante: {self._vida}")
 
     def aprender_magia(self, magia: Magia):
-        self._magias[magia.comando_voz] = magia
+        self._magias[magia.comando] = magia
 
 class MagoGelo(Mago):
     def __init__(self, nome: str):
@@ -170,24 +127,15 @@ class Loja:
 # ==============================================================================
 if __name__ == "__main__":
     print("========================================")
-    print("      🧙‍♂️ BEM-VINDO AO MAGO DE VOZ 🧙‍♂️    ")
+    print("      🧙‍♂️ BEM-VINDO AO MAGO 🧙‍♂️    ")
     print("========================================")
     
-    print("\nComo deseja controlar as suas magias?")
-    print("[ 1 ] Usar Microfone (Falar comandos)")
-    print("[ 2 ] Usar Teclado (Digitar comandos)")
-    
-    modo_escolhido = ""
-    while modo_escolhido not in ["1", "2"]:
-        modo_escolhido = input("Escolha o modo (1 ou 2): ").strip()
-    
-    # Passamos "." assumindo que o código está rodando direto de dentro da pasta do modelo
-    motor = MotorEntrada(modo=modo_escolhido, caminho_modelo=".")
+    motor = MotorEntrada()
     
     # Seleção de Região
     jogador = None
     while jogador is None:
-        fala = motor.obter_comando("Escolha sua Região de Origem (diga ou digite: 'gelo', 'deserto' ou 'praia')")
+        fala = motor.obter_comando("Escolha sua Região de Origem ('gelo', 'deserto' ou 'praia')")
         print(f"📝 Comando interpretado: '{fala}'")
         
         if "gelo" in fala:
@@ -208,7 +156,7 @@ if __name__ == "__main__":
     
     while not orc.esta_morto() and jogador.vida > 0:
         print(f"\n[SUA VEZ] Vida: {jogador.vida} | Mana: {jogador.mana}")
-        fala = motor.obter_comando("Diga ou digite sua magia de ataque ou 'usar pocao'")
+        fala = motor.obter_comando("Digite sua magia de ataque ou 'usar pocao'")
         print(f"📝 Comando interpretado: '{fala}'")
         
         if fala == "usar pocao":
@@ -241,7 +189,7 @@ if __name__ == "__main__":
     print("========================================")
     
     while True:
-        fala = motor.obter_comando("Diga ou digite 'comprar pocao' ou 'sair'")
+        fala = motor.obter_comando("Digite 'comprar pocao' ou 'sair'")
         print(f"📝 Comando interpretado: '{fala}'")
         
         if "sair" in fala:
