@@ -1,27 +1,23 @@
 from abc import ABC
+from classes.magias import MagiaAtaque
 class Inimigo(ABC):
-    def __init__(self, nome, vida, dano, moedas, fraqueza, magia_drop=None):
+    def __init__(self, nome, vida, dano, moedas, fraqueza):
         self.nome = nome
         self.vida = vida
         self.dano = dano
         self.moedas = moedas
         self.fraqueza = fraqueza
-        self.magia_drop = magia_drop
-
+    
     def receber_dano(self, dano):
         self.vida = max(0, self.vida - dano)
 
     def esta_morto(self):
         return self.vida <= 0
-    
-    def tem_drop_magia(self):
-        return self.magia_drop is not None
 
 #Região de agua
 class Sereia(Inimigo):
     def __init__(self):
         super().__init__("Sereia", 40, 10, 10, "grama")
-
 
 class Hidra(Inimigo):
     def __init__(self):
@@ -33,8 +29,12 @@ class Kraken(Inimigo):
         super().__init__("Kraken", 60, 20, 20, "grama")
 
 class Leviata(Inimigo):
-    def __init__(self, magia_drop=None):
-        super().__init__("Leviata", 100, 30, 90, "grama", magia_drop)
+    def __init__(self):
+        super().__init__("Leviata", 100, 30, 90, "grama")
+
+    def drop_magia(self):
+        return MagiaAtaque("Tsunami", 25, "agua", 45)
+        
         
 #Região de fogo
 class OrcLava(Inimigo):
@@ -52,8 +52,11 @@ class DemonioMagma(Inimigo):
         super().__init__("Demonio Magma", 100, 30, 50, "agua")
 
 class Dragao_de_fogo(Inimigo):
-    def __init__(self, magia_drop=None):
-        super().__init__("Dragão de Fogo", 150, 40, 130, "agua", magia_drop)
+    def __init__(self):
+        super().__init__("Dragão de Fogo", 150, 40, 130, "agua")
+    
+    def drop_magia(self):
+        return MagiaAtaque("Fogo Abrasador", 30, "fogo", 50)
 
 #Região da selva
 class Serpente(Inimigo):
@@ -71,12 +74,17 @@ class AranhaGigante(Inimigo):
         super().__init__("Aranha Gigante", 70, 28, 40, "fogo")
 
 class Golem_enferrujado(Inimigo):
-    def __init__(self, magia):
-        self.magia = magia
+    def __init__(self):
         super().__init__("Golem Enferrujado", 120, 40, 110, "fogo")
+    
+    def drop_magia(self):
+        return MagiaAtaque("Escudo de Metal", 20, "terra", 35)
 
 
 #Boss Final
 class BossFinal(Inimigo):
     def __init__(self):
         super().__init__("Malakar", 200, 25, 100, "nenhuma")
+    
+    def drop_magia(self):
+        return MagiaAtaque("Fogo Primordial", 40, "fogo", 60)

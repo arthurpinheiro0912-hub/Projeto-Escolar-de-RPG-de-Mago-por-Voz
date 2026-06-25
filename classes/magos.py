@@ -4,9 +4,9 @@ from classes.magias import MagiaAtaque
 class Mago(ABC):
     def __init__(self, nome):
         self.nome = nome
-        self.__vida_max = 100
-        self._vida = 100
-        self._mana = 60
+        self.__vida_max = 200
+        self._vida = 200
+        self._mana = 300
         self._magias = {}
         self._pocoes = 2
         self._moedas = 0
@@ -44,7 +44,7 @@ class Mago(ABC):
     def usar_pocao(self):
         if self._pocoes > 0:
             self._pocoes -= 1
-            self._vida = min(self.vida_max, self._vida + 40)
+            self._vida = min(self.__vida_max, self._vida + 40)
             print("Vida regenerada")
         else:
             print("Não possui poções")

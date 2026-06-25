@@ -63,6 +63,13 @@ def combate(mago, inimigo):
             print(f"\n✅ Você derrotou {inimigo.nome}!")
             mago.adicionar_moedas(inimigo.moedas)
             print(f"Você ganhou {inimigo.moedas} moedas!")
+            
+            # Verificar se o inimigo dropará uma magia
+            if hasattr(inimigo, 'drop_magia'):
+                magia = inimigo.drop_magia()
+                if magia:
+                    print(f"\n⭐ {inimigo.nome} dropou uma magia: {magia.nome_magia}!")
+                    mago.aprender_magia(magia)
             break
 
         time.sleep(1)
