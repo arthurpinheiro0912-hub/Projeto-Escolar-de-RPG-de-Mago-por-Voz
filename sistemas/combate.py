@@ -1,5 +1,5 @@
 import time
-
+from classes.loja import Loja
 def exibir_status(mago, inimigo):
     print("\n========================")
     print(f"{mago.nome} | Vida: {mago.vida} | Mana: {mago.mana} | Poções: {mago.pocoes}")
@@ -11,6 +11,7 @@ def turno_jogador(mago, inimigo):
     print("Escolha sua ação:")
     print("1 - Usar magia")
     print("2 - Usar poção")
+    print("3 - Loja")
 
     escolha = input("> ")
 
@@ -38,8 +39,11 @@ def turno_jogador(mago, inimigo):
     elif escolha == "2":
         mago.usar_pocao()
 
-    else:
-        print("Ação inválida!")
+    elif escolha == "3":
+        loja = Loja()
+        loja.interagir(mago)
+
+
 
 
 def turno_inimigo(mago, inimigo):

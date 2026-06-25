@@ -7,7 +7,7 @@ class Loja:
 
         if escolha == "s":
             if jogador.gastar_moedas(self._preco_pocao):
-                jogador._pocoes += 1
+                jogador.adicionar_pocoes(1)
                 print("Poção comprada!")
             else:
                 print("Ouro insuficiente")

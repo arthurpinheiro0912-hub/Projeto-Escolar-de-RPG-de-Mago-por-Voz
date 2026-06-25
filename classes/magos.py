@@ -58,6 +58,9 @@ class Mago(ABC):
             return True
         return False
 
+    def adicionar_pocoes(self, quantidade):
+        self._pocoes += quantidade
+
     def aprender_magia(self, magia):
         self._magias[magia.nome_magia.lower()] = magia
 
