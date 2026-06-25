@@ -14,6 +14,10 @@ class Inimigo(ABC):
     def esta_morto(self):
         return self.vida <= 0
 
+class Mixin:
+    def log(self, mensagem):
+        print(f"[LOG] {mensagem}")
+
 #Região de agua
 class Sereia(Inimigo):
     def __init__(self):
@@ -28,11 +32,12 @@ class Kraken(Inimigo):
     def __init__(self):
         super().__init__("Kraken", 60, 20, 20, "grama")
 
-class Leviata(Inimigo):
+class Leviata(Inimigo, Mixin):
     def __init__(self):
         super().__init__("Leviata", 100, 30, 90, "grama")
 
     def drop_magia(self):
+        self.log(f"{self.nome} dropou a magia Tsunami!")
         return MagiaAtaque("Tsunami", 25, "agua", 45)
         
         
@@ -56,6 +61,7 @@ class Dragao_de_fogo(Inimigo):
         super().__init__("Dragão de Fogo", 150, 40, 130, "agua")
     
     def drop_magia(self):
+        self.log(f"{self.nome} dropou a magia Fogo Abrasador!")
         return MagiaAtaque("Fogo Abrasador", 30, "fogo", 50)
 
 #Região da selva
@@ -73,11 +79,12 @@ class AranhaGigante(Inimigo):
     def __init__(self):
         super().__init__("Aranha Gigante", 70, 28, 40, "fogo")
 
-class Golem_enferrujado(Inimigo):
+class Golem_enferrujado(Inimigo, Mixin):
     def __init__(self):
         super().__init__("Golem Enferrujado", 120, 40, 110, "fogo")
     
     def drop_magia(self):
+        self.log(f"{self.nome} dropou a magia Escudo de Metal!")
         return MagiaAtaque("Escudo de Metal", 20, "terra", 35)
 
 
@@ -87,4 +94,5 @@ class BossFinal(Inimigo):
         super().__init__("Malakar", 200, 25, 100, "nenhuma")
     
     def drop_magia(self):
+        self.log(f"{self.nome} dropou a magia Fogo Primordial!")
         return MagiaAtaque("Fogo Primordial", 40, "fogo", 60)
