@@ -4,7 +4,7 @@ from classes.magias import MagiaAtaque
 class Mago(ABC):
     def __init__(self, nome):
         self.nome = nome
-        self.vida_max = 100
+        self.__vida_max = 100
         self._vida = 100
         self._mana = 60
         self._magias = {}
@@ -37,7 +37,7 @@ class Mago(ABC):
             return True
         return False
 
-    def levar_dano(self, dano):
+    def receber_dano(self, dano):
         self._vida = max(0, self._vida - dano)
         print(f"Dano recebido: {dano}")
 
@@ -52,26 +52,26 @@ class Mago(ABC):
     def adicionar_moedas(self, quantidade):
         self._moedas += quantidade
 
-    def gastar_moedas(self, qtd):
-        if self._moedas >= qtd:
-            self._moedas -= qtd
+    def gastar_moedas(self, quantidade):
+        if self._moedas >= quantidade:
+            self._moedas -= quantidade
             return True
         return False
 
     def aprender_magia(self, magia):
-        self._magias[magia.nome.lower()] = magia
+        self._magias[magia.nome_magia.lower()] = magia
 
 class MagoFogo(Mago):
     def __init__(self, nome):
         super().__init__(nome)
-        self.aprender_magia(MagiaAtaque("bola de fogo", 15, 35))
+        self.aprender_magia(MagiaAtaque("bola de fogo", 15, "fogo", 35))
 
 class MagoGelo(Mago):
     def __init__(self, nome):
         super().__init__(nome)
-        self.aprender_magia(MagiaAtaque("lança de gelo", 10, 25))
+        self.aprender_magia(MagiaAtaque("lança de gelo", 10, "gelo", 25))
 
 class MagoPlanta(Mago):
     def __init__(self, nome):
         super().__init__(nome)
-        self.aprender_magia(MagiaAtaque("espinhos", 8, 20))
+        self.aprender_magia(MagiaAtaque("espinhos", 8, "grama", 20))
