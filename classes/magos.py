@@ -66,10 +66,10 @@ class MagoFogo(Mago):
         super().__init__(nome)
         self.aprender_magia(MagiaAtaque("bola de fogo", 15, "fogo", 35))
 
-class MagoGelo(Mago):
+class MagoAgua(Mago):
     def __init__(self, nome):
         super().__init__(nome)
-        self.aprender_magia(MagiaAtaque("lança de gelo", 10, "gelo", 25))
+        self.aprender_magia(MagiaAtaque("Jato de Água", 10, "agua", 25))
 
 class MagoPlanta(Mago):
     def __init__(self, nome):

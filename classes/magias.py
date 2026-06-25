@@ -7,7 +7,7 @@ class Magia(ABC):
         self.tipo_de_magia = tipo_de_magia
 
     @abstractmethod
-    def atacar(self, conjurador, alvo):
+    def atacar(self, conjurador):
         pass
 
 
@@ -18,8 +18,9 @@ class MagiaAtaque(Magia):
 
     def atacar(self, conjurador, alvo):
         if self.tipo_de_magia == alvo.fraqueza:
+            dano_final = self.dano + 5
             print(f"{conjurador.nome} usou {self.nome_magia}, que é crítica, dando 5 de dano extra")
-            alvo.receber_dano(self.dano + 5) 
+            alvo.receber_dano(dano_final) 
         else:
             print(f"{conjurador.nome} usou {self.nome_magia}")
             alvo.receber_dano(self.dano)

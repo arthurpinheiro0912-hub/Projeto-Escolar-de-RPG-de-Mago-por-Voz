@@ -13,35 +13,35 @@ class Inimigo(ABC):
     def esta_morto(self):
         return self.vida <= 0
 
-#Região de gelo
-class GoblinGelo(Inimigo):
+#Região de agua
+class Sereia(Inimigo):
     def __init__(self):
-        super().__init__("Goblin de Gelo", 40, 10, 10, "grama")
+        super().__init__("Sereia", 40, 10, 10, "grama")
 
 
-class Yeti(Inimigo):
+class Hidra(Inimigo):
     def __init__(self):
-        super().__init__("Yeti", 70, 15, 20, "grama")
+        super().__init__("Hidra", 70, 15, 20, "grama")
 
 
-class EspiritoArtico(Inimigo):
+class Kraken(Inimigo):
     def __init__(self):
-        super().__init__("Espírito Ártico", 60, 12, 15, "grama")
+        super().__init__("Kraken", 60, 12, 15, "grama")
         
-#Fegião de fogo
+#Região de fogo
 class OrcLava(Inimigo):
     def __init__(self):
-        super().__init__("Orc Lava", 60, 15, 20, "gelo")
+        super().__init__("Orc Lava", 60, 15, 20, "agua")
 
 
 class ElementalFogo(Inimigo):
     def __init__(self):
-        super().__init__("Elemental de Fogo", 80, 18, 25, "gelo")
+        super().__init__("Elemental de Fogo", 80, 18, 25, "agua")
 
 
 class DemonioMagma(Inimigo):
     def __init__(self):
-        super().__init__("Demonio Magma", 90, 20, 30, "gelo")
+        super().__init__("Demonio Magma", 90, 20, 30, "agua")
 
 #Região da selva
 class Serpente(Inimigo):

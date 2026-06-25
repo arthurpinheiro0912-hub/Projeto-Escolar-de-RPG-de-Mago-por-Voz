@@ -12,5 +12,5 @@ class Regiao:
 
 #TALVEZ POSSA SER UM ARQUIVO CSV
 def criar_regioes():
-    regioes = [Regiao("Montanhas Congeladas", [GoblinGelo(), Yeti(), EspiritoArtico()]), Regiao("Vulcão", [OrcLava(), ElementalFogo(), DemonioMagma()]), Regiao("Selva", [Serpente(), EspiritoFloresta(), AranhaGigante()])
+    regioes = [Regiao("Atlântida", [Sereia(), Hidra(), Kraken()]), Regiao("Vulcão", [OrcLava(), ElementalFogo(), DemonioMagma()]), Regiao("Selva", [Serpente(), EspiritoFloresta(), AranhaGigante()])
 ]

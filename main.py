@@ -1,11 +1,11 @@
-from classes.magos import MagoFogo, MagoGelo, MagoPlanta
-from classes.inimigos import GoblinGelo
+from classes.magos import MagoFogo, MagoAgua, MagoPlanta
+from classes.inimigos import Sereia
 from sistemas.combate import combate
 
 def escolher_mago():
     print("Escolha seu mago:")
     print("1 - Mago de Fogo")
-    print("2 - Mago de Gelo")
+    print("2 - Mago de Agua")
     print("3 - Mago de Planta")
 
     escolha = input("> ")
@@ -14,7 +14,7 @@ def escolher_mago():
     if escolha == "1":
         return MagoFogo(nome)
     elif escolha == "2":
-        return MagoGelo(nome)
+        return MagoAgua(nome)
     else:
         return MagoPlanta(nome)
 
@@ -22,7 +22,7 @@ def escolher_mago():
 def main():
     mago = escolher_mago()
 
-    inimigo = GoblinGelo()
+    inimigo = Sereia()
 
     combate(mago, inimigo)
 
