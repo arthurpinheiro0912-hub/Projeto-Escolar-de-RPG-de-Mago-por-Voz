@@ -3,13 +3,13 @@ from classes.inimigos import Sereia
 from sistemas.combate import combate
 
 def escolher_mago():
+    nome = input("Nome do seu mago: ")
     print("Escolha seu mago:")
     print("1 - Mago de Fogo")
     print("2 - Mago de Agua")
     print("3 - Mago de Planta")
 
     escolha = input("> ")
-    nome = input("Nome do seu mago: ")
 
     if escolha == "1":
         return MagoFogo(nome)
