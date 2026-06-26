@@ -38,7 +38,7 @@ def turno_jogador(mago, inimigo):
 
     elif escolha == "2":
         mago.usar_pocao()
-
+        
     elif escolha == "3":
         loja = Loja()
         loja.interagir(mago)

@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from classes.magias import MagiaAtaque
 
 class Mago(ABC):
@@ -6,7 +6,7 @@ class Mago(ABC):
         self.nome = nome
         self.__vida_max = 200
         self._vida = 200
-        self._mana = 300
+        self._mana = 100
         self._magias = {}
         self._pocoes = 2
         self._moedas = 0
@@ -30,6 +30,10 @@ class Mago(ABC):
     @property
     def moedas(self):
         return self._moedas
+    
+    @abstractmethod
+    def regenerar_mana(self):
+        pass
 
     def gastar_mana(self, quantidade):
         if self._mana >= quantidade:
@@ -69,12 +73,24 @@ class MagoFogo(Mago):
         super().__init__(nome)
         self.aprender_magia(MagiaAtaque("bola de fogo", 15, "fogo", 35))
 
+    def regenerar_mana(self):
+        self._mana = min(300, self._mana + 15)
+        print("Mana regenerada em 15 pontos.")
+
 class MagoAgua(Mago):
     def __init__(self, nome):
         super().__init__(nome)
         self.aprender_magia(MagiaAtaque("Jato de Água", 10, "agua", 25))
 
+    def regenerar_mana(self):
+        self._mana = min(300, self._mana + 15)
+        print("Mana regenerada em 15 pontos.")
+
 class MagoPlanta(Mago):
     def __init__(self, nome):
         super().__init__(nome)
         self.aprender_magia(MagiaAtaque("espinhos", 8, "grama", 20))
+
+    def regenerar_mana(self):
+        self._mana = min(300, self._mana + 16)
+        print("Mana regenerada em 16 pontos.")

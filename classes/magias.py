@@ -18,7 +18,7 @@ class MagiaAtaque(Magia):
 
     def atacar(self, conjurador, alvo):
         if self.tipo_de_magia == alvo.fraqueza:
-            dano_final = self.dano + 50
+            dano_final = self.dano + 5
             print(f"{conjurador.nome} usou {self.nome_magia}, que é crítica, dando 5 de dano extra")
             alvo.receber_dano(dano_final) 
 
